@@ -1,6 +1,7 @@
 class Board
   attr_accessor :b
   attr_accessor :balls
+  attr_accessor :turn
 
   def initialize
     @ball1 = "(1)".black.on_light_green
@@ -14,23 +15,10 @@ class Board
     @misplaced = Array.new(13).fill(0)
     @code = [@ball6, @ball4, @ball5, @ball3]
     @turn = 1
-
-    puts "  Welcome Player!!  "
     reset
     display
-  end
-
-   def game
-    while @turn <= 12 || win?
-      balls_selection      
-      exact_match
-      misplaced_match
-      display
-      win?      
-      @turn +=1
-    end
-  end
-
+  end   
+  
   def reset
     @b = {
       1 => [@emp, @emp, @emp, @emp], 
@@ -49,7 +37,6 @@ class Board
   end
 
   def display    
-    # print connected board
     puts <<~Board
 
       ~~~ MasterMind Game ~~~
@@ -72,13 +59,14 @@ class Board
     ||===#{@ball1}#{@ball2}#{@ball3}#{@ball4}#{@ball5}#{@ball6}====||
     ||=========================||
     =============================
-
+    
     Board
   end
   
   def balls_selection
     puts "Please select the balls by entering its number"
     puts "You have ##{13-@turn} turns to crack the code" 
+    # puts "Code is: ",@code
     @balls = []
     while @balls.size < 4
       print "Enter ball ##{@balls.size + 1}: "
@@ -93,9 +81,20 @@ class Board
   end
 
   def exact_match
+    @exact_arr = []
     @balls.each_with_index do | ball, i |
       if @balls[i] == @code[i]
+        @exact_arr << ball
         @exact[@turn] += 1
+      end
+    end
+    #puts "Exact_arr: ",@exact_arr
+  end
+     
+  def misplaced_match
+    @balls.each_with_index do | ball, i |
+      if @code.include?(balls[i])  && @balls[i] != @code[i] && !@exact_arr.include?(@balls[i]) 
+        @misplaced[@turn] += 1
       end
     end
   end
@@ -108,15 +107,6 @@ class Board
       puts "Attempts over!"
       exit
     end    
-  end
-     
-  def misplaced_match
-    @balls.each_with_index do | ball, i |
-      if @code.include?(@balls[i]) && @balls[i] != @code[i]
-        @misplaced[@turn] += 1
-      end
-    end
-    puts "Misplaced is :",@misplaced[@turn]  
   end
 
 end
