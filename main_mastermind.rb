@@ -6,11 +6,11 @@ require_relative 'play'
 
 board = Board.new
 play = Play.new(board)
-until board.turn > 12 || board.win?
-  board.balls_selection      
-  board.exact_match
-  board.misplaced_match
+until play.turn > 12 || play.win?
+  play.balls_selection      
+  play.exact_match
+  play.misplaced_match
   board.display
-  board.win?      
-  board.turn +=1
+  play.win?      
+  play.turn +=1
 end

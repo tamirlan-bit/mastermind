@@ -1,7 +1,6 @@
 class Board
-  attr_accessor :b
-  attr_accessor :balls
-  attr_accessor :turn
+  attr_accessor :b, :balls, :exact, :misplaced
+  attr_reader :ball1, :ball2, :ball3, :ball4, :ball5, :ball6  
 
   def initialize
     @ball1 = "(1)".black.on_light_green
@@ -13,8 +12,6 @@ class Board
     @emp = "(_)"
     @exact = Array.new(13).fill(0)
     @misplaced = Array.new(13).fill(0)
-    @code = [@ball6, @ball4, @ball5, @ball3]
-    @turn = 1
     reset
     display
   end   
@@ -37,9 +34,7 @@ class Board
   end
 
   def display    
-    puts <<~Board
-
-      ~~~ MasterMind Game ~~~
+    puts <<~Board    
     _____________________________
     |EXACT_____________MISPLACED|
     ||_#{@exact[12]}_||#{@b[12][0]}|#{@b[12][1]}|#{@b[12][2]}|#{@b[12][3]}||_#{@misplaced[12]}_||
@@ -61,52 +56,18 @@ class Board
     =============================
     
     Board
-  end
-  
-  def balls_selection
-    puts "Please select the balls by entering its number"
-    puts "You have ##{13-@turn} turns to crack the code" 
-    # puts "Code is: ",@code
-    @balls = []
-    while @balls.size < 4
-      print "Enter ball ##{@balls.size + 1}: "
-      input = gets.chomp.to_i
-      if input.between?(1, 6)
-        @balls << instance_variable_get("@ball#{input}")
-      else
-        puts "That's not a valid number. Try again."
-      end      
-    end
-    b[@turn] = @balls    
-  end
+  end  
 
-  def exact_match
-    @exact_arr = []
-    @balls.each_with_index do | ball, i |
-      if @balls[i] == @code[i]
-        @exact_arr << ball
-        @exact[@turn] += 1
-      end
-    end
-    #puts "Exact_arr: ",@exact_arr
-  end
-     
-  def misplaced_match
-    @balls.each_with_index do | ball, i |
-      if @code.include?(balls[i])  && @balls[i] != @code[i] && !@exact_arr.include?(@balls[i]) 
-        @misplaced[@turn] += 1
-      end
-    end
-  end
-
-  def win?
-    if @exact[@turn] == 4
-      puts "Code was cracked, only took you ##{@turn} turns, good Job!\n\n"
+  def replay
+    puts "Would you like Another Game?\nPress 'Y' for Yes and 'N' for No"
+    re = gets.chomp.downcase
+    if re == 'y' || re =='yes'      
+      reset
+      display
+    else
+      puts "\nwell ok (ノಠ益ಠ)ノ彡┻━┻\n\n"
       exit
-    elsif @turn == 12 && @exact[@turn] < 4
-      puts "Attempts over!"
-      exit
-    end    
+    end
   end
 
 end
