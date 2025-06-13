@@ -1,6 +1,6 @@
 class Board
   attr_accessor :b, :balls, :exact, :misplaced
-  attr_reader :ball1, :ball2, :ball3, :ball4, :ball5, :ball6  
+  attr_reader :ball1, :ball2, :ball3, :ball4, :ball5, :ball6, :code
 
   def initialize
     @ball1 = "(1)".black.on_light_green
@@ -10,6 +10,7 @@ class Board
     @ball5 = "(5)".black.on_light_magenta
     @ball6 = "(6)".black.on_light_blue
     @emp = "(_)"
+    @code = [@ball6, @ball4, @ball5, @ball3]
     @exact = Array.new(13).fill(0)
     @misplaced = Array.new(13).fill(0)
     reset
@@ -17,20 +18,11 @@ class Board
   end   
   
   def reset
-    @b = {
-      1 => [@emp, @emp, @emp, @emp], 
-      2 => [@emp, @emp, @emp, @emp],
-      3 => [@emp, @emp, @emp, @emp],
-      4 => [@emp, @emp, @emp, @emp],
-      5 => [@emp, @emp, @emp, @emp],
-      6 => [@emp, @emp, @emp, @emp],
-      7 => [@emp, @emp, @emp, @emp],
-      8 => [@emp, @emp, @emp, @emp],
-      9 => [@emp, @emp, @emp, @emp],
-      10 => [@emp, @emp, @emp, @emp],
-      11 => [@emp, @emp, @emp, @emp],
-      12 => [@emp, @emp, @emp, @emp]      
-    }
+    @exact = Array.new(13).fill(0)
+    @misplaced = Array.new(13).fill(0)
+    empty_row = Array.new(4, @emp)
+    @b = {}
+    (1..13).each { |i| @b[i] = empty_row.dup }  
   end
 
   def display    
@@ -50,7 +42,7 @@ class Board
     ||_#{@exact[2]}_||#{@b[2][0]}|#{@b[2][1]}|#{@b[2][2]}|#{@b[2][3]}||_#{@misplaced[2]}_||
     ||_#{@exact[1]}_||#{@b[1][0]}|#{@b[1][1]}|#{@b[1][2]}|#{@b[1][3]}||_#{@misplaced[1]}_||
     ||=========================||
-    ||=== Choose The Balls ====||
+    ||==== Available Balls ====||
     ||===#{@ball1}#{@ball2}#{@ball3}#{@ball4}#{@ball5}#{@ball6}====||
     ||=========================||
     =============================
@@ -58,14 +50,15 @@ class Board
     Board
   end  
 
-  def replay
+  def replay(play)
     puts "Would you like Another Game?\nPress 'Y' for Yes and 'N' for No"
     re = gets.chomp.downcase
     if re == 'y' || re =='yes'      
       reset
+      play.reset
       display
     else
-      puts "\nwell ok (ノಠ益ಠ)ノ彡┻━┻\n\n"
+      puts "\nBey!!! (ノಠ益ಠ)ノ彡┻━┻\n\n"
       exit
     end
   end
