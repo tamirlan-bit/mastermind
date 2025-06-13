@@ -4,7 +4,13 @@ class Play
 
   def initialize(board)
     @board = board
-    #puts "Player Make Your selection!\n"
+    puts "Player Make Your selection!\n"
+  end
+
+  def game
+    board.balls_selection.display
+    board.exact_match
+    board.win?
   end
 
   def replay
