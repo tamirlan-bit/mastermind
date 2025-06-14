@@ -9,10 +9,10 @@ class Board
     @ball4 = "(4)".black.on_light_red
     @ball5 = "(5)".black.on_light_magenta
     @ball6 = "(6)".black.on_light_blue
-    @emp = "(_)"    
+    @emp = "(_)"
     reset
     display
-  end   
+  end
   
   def reset
     @code = [@ball1, @ball2, @ball3, @ball4, @ball5, @ball6].sample(4)
@@ -20,12 +20,12 @@ class Board
     @misplaced = Array.new(13).fill(0)
     empty_row = Array.new(4, @emp)
     @b = {}
-    (1..13).each { |i| @b[i] = empty_row.dup }  
+    (1..13).each { |i| @b[i] = empty_row.dup }
   end
 
-  def display  
-    # puts @code  
-    puts <<~Board    
+  def display
+    # puts @code 
+    puts <<~Board
     _____________________________
     |EXACT_____________MISPLACED|
     ||_#{@exact[12]}_||#{@b[12][0]}|#{@b[12][1]}|#{@b[12][2]}|#{@b[12][3]}||_#{@misplaced[12]}_||
@@ -35,7 +35,7 @@ class Board
     ||_#{@exact[8]}_||#{@b[8][0]}|#{@b[8][1]}|#{@b[8][2]}|#{@b[8][3]}||_#{@misplaced[8]}_||
     ||_#{@exact[7]}_||#{@b[7][0]}|#{@b[7][1]}|#{@b[7][2]}|#{@b[7][3]}||_#{@misplaced[7]}_||
     ||_#{@exact[6]}_||#{@b[6][0]}|#{@b[6][1]}|#{@b[6][2]}|#{@b[6][3]}||_#{@misplaced[6]}_||
-    ||_#{@exact[5]}_||#{@b[5][0]}|#{@b[5][1]}|#{@b[5][2]}|#{@b[5][3]}||_#{@misplaced[5]}_||   
+    ||_#{@exact[5]}_||#{@b[5][0]}|#{@b[5][1]}|#{@b[5][2]}|#{@b[5][3]}||_#{@misplaced[5]}_||
     ||_#{@exact[4]}_||#{@b[4][0]}|#{@b[4][1]}|#{@b[4][2]}|#{@b[4][3]}||_#{@misplaced[4]}_||
     ||_#{@exact[3]}_||#{@b[3][0]}|#{@b[3][1]}|#{@b[3][2]}|#{@b[3][3]}||_#{@misplaced[3]}_||
     ||_#{@exact[2]}_||#{@b[2][0]}|#{@b[2][1]}|#{@b[2][2]}|#{@b[2][3]}||_#{@misplaced[2]}_||
@@ -47,12 +47,13 @@ class Board
     =============================
     
     Board
-  end  
+  end
 
   def replay(play)
-    puts "Would you like Another Game?\nPress 'Y' for Yes and 'N' for No"
+    puts "\n\nWould you like Another Game?\nPress 'Y' for Yes and 'N' for No"
     re = gets.chomp.downcase
-    if re == 'y' || re =='yes'      
+    if re == 'y' || re =='yes' 
+      clear_screen
       reset
       play.reset
       display
@@ -60,6 +61,10 @@ class Board
       puts "\nBey!!! (ノಠ益ಠ)ノ彡┻━┻\n\n"
       exit
     end
+  end
+
+  def clear_screen
+    system("clear") || system("cls")
   end
 
 end
