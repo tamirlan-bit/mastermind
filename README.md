@@ -22,9 +22,9 @@ Install the `colorize` gem if you don't have it yet:
 
 **Game in progress:**
 
-![Screenshot 1](mastermind1.jpg)
+![Screenshot 1](images/mastermind1.jpg)
 
 **Game over screen:**
 
-![Screenshot 2](mastermind%202.jpg)
+![Screenshot 2](images/mastermind%202.jpg)
 
