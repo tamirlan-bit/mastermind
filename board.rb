@@ -9,15 +9,13 @@ class Board
     @ball4 = "(4)".black.on_light_red
     @ball5 = "(5)".black.on_light_magenta
     @ball6 = "(6)".black.on_light_blue
-    @emp = "(_)"
-    @code = [@ball6, @ball4, @ball5, @ball3]
-    @exact = Array.new(13).fill(0)
-    @misplaced = Array.new(13).fill(0)
+    @emp = "(_)"    
     reset
     display
   end   
   
   def reset
+    @code = [@ball1, @ball2, @ball3, @ball4, @ball5, @ball6].sample(4)
     @exact = Array.new(13).fill(0)
     @misplaced = Array.new(13).fill(0)
     empty_row = Array.new(4, @emp)
@@ -25,7 +23,8 @@ class Board
     (1..13).each { |i| @b[i] = empty_row.dup }  
   end
 
-  def display    
+  def display  
+    # puts @code  
     puts <<~Board    
     _____________________________
     |EXACT_____________MISPLACED|

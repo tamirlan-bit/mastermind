@@ -5,8 +5,8 @@ class Play
   def initialize(board)
     @board = board
     @turn = 1
-    puts "Welcome to ~ MasterMind Game ~\n"
-    puts "turn is #{turn}"
+    puts "~~~ Welcome to MasterMind Game ~~~   \n\n"
+    puts "Please select the balls by entering its number"
   end
 
   def reset
@@ -14,8 +14,7 @@ class Play
   end
 
   def balls_selection
-    puts "Please select the balls by entering its number"
-    puts "You have ##{13-@turn} turns to crack the code" 
+    puts "You have ##{13-@turn} turns to crack the code\n" 
     # puts "Code is: ",@board.code
     @board.balls = []
     while @board.balls.size < 4
@@ -58,6 +57,5 @@ class Play
       @board.replay(self)
     end    
   end
-
 
 end
